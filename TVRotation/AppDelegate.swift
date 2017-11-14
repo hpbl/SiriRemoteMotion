@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GameController
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,7 +17,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(controllerDidConnect),
+                                               name: Notification.Name.GCControllerDidConnect,
+                                               object: nil)
+        
         return true
+    }
+    
+    @objc func controllerDidConnect(notification: NSNotification) {
+        let gameController = notification.object as? GCController
+        if gameController != nil
+        {
+            Remote.sharedInstance.controller = gameController
+        }
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
