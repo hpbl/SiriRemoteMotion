@@ -27,9 +27,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     @objc func controllerDidConnect(notification: NSNotification) {
         let gameController = notification.object as? GCController
-        if gameController != nil
-        {
+        if gameController != nil {
             Remote.sharedInstance.controller = gameController
+        }
+        
+        if let controller = Remote.sharedInstance.controller {
+            if let motion = controller.motion {
+                motion.valueChangedHandler = { (motion) -> Void in
+                    let angle = controller.rotation(motion: motion)
+                    print(angle)
+                }
+            } else {
+                print("no motion")
+            }
+        } else {
+            print("no controller")
         }
     }
 

@@ -13,15 +13,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
-        if let controller = Remote.sharedInstance.controller {
-            if let motion = controller.motion {
-                motion.valueChangedHandler = { (motion) -> Void in
-                    let angle = controller.rotation(motion: motion)
-                    print(angle)
-                }
-            }
-        }
     }
 
     override func didReceiveMemoryWarning() {
